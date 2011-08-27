@@ -3,13 +3,13 @@ package net.bk02.mobilemath.client;
 import net.bk02.mobilemath.client.utils.Graph;
 
 import com.google.gwt.canvas.client.Canvas;
-import com.google.gwt.canvas.dom.client.Context2d;
 import com.google.gwt.canvas.dom.client.CssColor;
 import com.google.gwt.core.client.EntryPoint;
 import com.google.gwt.event.dom.client.ClickEvent;
 import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.Window;
 import com.google.gwt.user.client.ui.Button;
+import com.google.gwt.user.client.ui.HTML;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 import com.google.gwt.user.client.ui.RootPanel;
@@ -20,7 +20,6 @@ import com.google.gwt.user.client.ui.TextBox;
  */
 public class Mobilemath implements EntryPoint {
 	Canvas canvas;
-	Context2d context;
 	static final int canvasHeight = 500;
 	static final int canvasWidth = 800;
 	TextBox txtExpression;
@@ -51,10 +50,7 @@ public class Mobilemath implements EntryPoint {
 		canvas.setHeight(canvasHeight + "px");
 		canvas.setCoordinateSpaceHeight(canvasHeight);
 
-		context = canvas.getContext2d();
-		g = new Graph(context, canvasWidth, canvasHeight);
-		g.DrawAxis();
-		g.DrawRT(clYellow, "R=5*SIN(4*T)", -180, 180);
+		g = new Graph(canvas.getContext2d(), canvasWidth, canvasHeight);
 
 		txtExpression = new TextBox();
 		txtExpression.setText("R=5*SIN(4*T)");
@@ -88,6 +84,13 @@ public class Mobilemath implements EntryPoint {
 		RootPanel.get().add(label);
 
 		RootPanel.get().add(canvas);
+
+		HTML html = new HTML(
+				"Source code: <a href='http://www.bk02.net/mobilemath'>http://www.bk02.net/mobilemath</a> - <a href='http://code.google.com/p/mobilemath/'>http://code.google.com/p/mobilemath/</a>");
+		RootPanel.get().add(html);
+
+		g.DrawAxis();
+		g.DrawRT(clYellow, "R=5*SIN(4*T)", -180, 180);
 	}
 
 }
